@@ -1,0 +1,32 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "{{BaseHeader}}"
+#include "{{FileName}}.generated.h"
+
+/**
+ * {{Description}}
+ *
+ * Place this single actor in a level (Scripts/CreateFunctionalTestMap.py makes {{MapName}}). It builds what it needs
+ * at runtime ({{FixtureNote}}); everything the player does goes through the game's own keys.
+ *
+ * Steps:
+ *  1. TODO: one line per player action, in player words ("walks up to the cart, presses E ...").
+ */
+UCLASS()
+class MPFUNCTIONALTESTS_API A{{FileName}} : public {{BaseClass}}
+{
+	GENERATED_BODY()
+
+public:
+	A{{FileName}}();
+
+	// Tunables a designer may change in Details. Distances the player uses come from the game (GetGrabReach), not from here.
+	// UPROPERTY(EditAnywhere, Category = "Scenario|{{ShortName}}") TSoftClassPtr<AActor> SomethingClass;
+
+protected:
+	virtual void BuildScenario() override;
+
+private:
+	// UPROPERTY(Transient) TObjectPtr<AActor> Something;
+};

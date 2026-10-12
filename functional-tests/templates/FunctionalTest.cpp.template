@@ -1,0 +1,37 @@
+#include "{{FileName}}.h"
+#include "BeerInventoryComponent.h"
+#include "NetworkGrabSyncComponent.h"
+#include "MPReflection.h"
+
+using namespace MPReflection;
+
+A{{FileName}}::A{{FileName}}()
+{
+	// Generous upper bound for the whole scenario; every step has its own timeout.
+	TimeLimit = {{TimeLimit}}.f;
+{{CtorExtra}}	// Blueprint classes by soft path (the C++ classes are often only placeholders):
+	// SomethingClass = TSoftClassPtr<AActor>(FSoftObjectPath(TEXT("/Game/....BP_Something_C")));
+	// Known log noise that is not this scenario's business - one line each, with where it comes from and when to remove it:
+	// IgnoredLogErrors.Add(TEXT("..."));
+}
+
+void A{{FileName}}::BuildScenario()
+{
+{{FixtureCode}}
+	AddAction(TEXT("Preconditions"), [this]()
+	{
+		// What the test relies on: fail as [setup] (test out of date) instead of waiting for a timeout.
+		if (!CheckSetup(TestPawn && TestGrab && GetInventory(), TEXT("The player has no pawn / NetworkGrabSyncComponent / BeerInventoryComponent"))) return;
+		// const FString Missing = MissingFields(SomeBlueprintActor, { TEXT("VarA"), TEXT("VarB") });
+		// CheckSetup(Missing.IsEmpty(), FString::Printf(TEXT("%s has no %s"), *GetNameSafe(SomeBlueprintActor), *Missing));
+	});
+
+	// TODO: the scenario, one step per player action. Typical shape:
+	// AddApproach(TEXT("Walk up to X"), [this]() { return X.Get(); });                         // random distance within the game's reach
+	// AddClickOn(TEXT("Take it (LMB)"), EKeys::LeftMouseButton, [this]() { return X.Get(); },
+	//     [this]() { return GetInventory()->GetHeldItem() == X; });                            // re-aims, retries, follows the target
+	// AddDropInto(TEXT("Drop it into Y (G)"), [this]() { return FindPart(Y, TEXT("Opening")); },
+	//     [this]() { return /* Y took it */ false; });
+	// AddWaitUntil(TEXT("Y reacts"), [this]() { return /* game state */ false; }, 10.f);       // wait for state, never for time
+	// AddAction(TEXT("Y did it right"), [this]() { Check(/* game state */ false, TEXT("what is wrong, with the values seen")); });
+}
