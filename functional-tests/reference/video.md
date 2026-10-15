@@ -15,7 +15,7 @@ powershell -ExecutionPolicy Bypass -File .claude/skills/functional-tests/scripts
 powershell -ExecutionPolicy Bypass -File .claude/skills/functional-tests/scripts/run-tests.ps1 -Tests "Project.Functional Tests.Tests.FTEST_GuestOrder" -Video -UntilGreen 3
 ```
 - Видео — `A:\StealDrive\Saved\Videos\<Имя>_<дата-время>.mp4`; видео красного прогона переименовывается в `*_FAILED.mp4`.
-- Вручную: ключи редактора `-MPRecordVideo=<файл.mp4 | папка> -MPFFmpeg=E:\ffmpeg\ffmpeg.exe` (+ `-MPPlayerGrid` для сетевых).
+- Вручную: ключи редактора `-MPRecordVideo=<файл.mp4 | папка> -MPFFmpeg=<путь к ffmpeg.exe>` (+ `-MPPlayerGrid` для сетевых).
 - Если набор тестов: в папку пишется по файлу на тест.
 
 ## Проверить видео перед отправкой (обязательно)

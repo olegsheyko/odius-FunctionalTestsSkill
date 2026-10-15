@@ -24,8 +24,12 @@ if ($results.Count -eq 0) { "RESULTS: none (the run did not finish: crash, timeo
 else { "RESULTS:"; $results.GetEnumerator() | ForEach-Object { "  $($_.Key) = $($_.Value)" } }
 
 # Failure messages of the scenario ([game] / [timeout] / [setup]).
-$fails = $lines | Where-Object { $_ -cmatch "\[(game|timeout|setup)[^\]]*\] " -and $_ -notmatch "LogAutomationController" } |
-    ForEach-Object { Body $_ } | Select-Object -Unique | Select-Object -First 6
+# Network tests log the reason in LogTemp; functional tests only in the automation controller's line
+# ("FinishTest TestResult=Failed. [timeout] ..."): take the plain lines, else the controller's.
+$failLines = @($lines | Where-Object { $_ -cmatch "\[(game|timeout|setup)[^\]]*\] " })
+$plain = @($failLines | Where-Object { $_ -notmatch "LogAutomationController" })
+$fails = $(if ($plain.Count -gt 0) { $plain } else { $failLines }) |
+    ForEach-Object { (Body $_) -replace '^LogAutomationController: Error: ', '' -replace ' \[[A-Z]:\\[^\]]*\]$', '' } | Select-Object -Unique | Select-Object -First 6
 if ($fails) { "FAILURES:"; $fails | ForEach-Object { "  " + (Short $_) } }
 
 # The player (lane) that failed: its last steps.

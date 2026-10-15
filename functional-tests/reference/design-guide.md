@@ -32,7 +32,7 @@
 ```
 1. Подойти к ферментеру со стороны крана              -> AddGoTo / AddNavGoTo + AddApproach(Fermenter)
 2. Нажать E — кружка в руках                           -> AddKeyClick(E) + AddWaitUntil(в руках пиво)
-3. Отнести гостю и подать (ЛКМ)                        -> AddApproach(Guest) + AddClickOn(LMB, Guest, руки пусты)
+3. Отнести гостю и подать (E)                          -> AddApproach(Guest) + AddClickOn(E, Guest, руки пусты)
 4. Гость доволен                                       -> Check(OrderResult.Success)
 ```
 
@@ -43,7 +43,7 @@
 | Дойти куда-то на пустой карте | `AddGoTo` (станция) / `AddWalkTo` / `AddWalkPath` |
 | Дойти по реальной карте | `AddNavGoTo` (или `AddGoTo` в level-режиме), точка — `NavPointNear(Цель, Дист, MustSee)` |
 | Подойти, чтобы взаимодействовать | `AddApproach` / `AddApproachComponent` (случайная дистанция в пределах дальности игры) |
-| Взять / положить / подать (ЛКМ), взаимодействовать (E) | `AddClickOn(Name, Key, Target, Done)` — с прицелом, повтором, следованием |
+| Взять / подать (E), положить из рук в цель (ЛКМ), взаимодействовать (E) | `AddClickOn(Name, Key, Target, Done)` — с прицелом, повтором, следованием |
 | Нажать клавишу без цели (Space, G, E на себя) | `AddKeyClick` / `AddClickUntil` |
 | Бросить предмет в отверстие | `AddDropInto(Opening, Done, ReadyToDrop)` |
 | Забраться на блоки/помост | `AddClimbTo(FindStepsUpTo(Цель) + Цель)` |

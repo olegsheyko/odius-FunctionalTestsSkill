@@ -34,4 +34,10 @@ void A{{FileName}}::BuildScenario()
 	//     [this]() { return /* Y took it */ false; });
 	// AddWaitUntil(TEXT("Y reacts"), [this]() { return /* game state */ false; }, 10.f);       // wait for state, never for time
 	// AddAction(TEXT("Y did it right"), [this]() { Check(/* game state */ false, TEXT("what is wrong, with the values seen")); });
+
+	// Delete this step once the scenario above is written: an unfinished scaffold must never pass.
+	AddAction(TEXT("The scenario is written"), [this]()
+	{
+		CheckSetup(false, TEXT("A{{FileName}}: the scenario is not written yet (scaffold from new-test.py) - write BuildScenario and delete this step"));
+	});
 }
